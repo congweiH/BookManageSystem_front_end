@@ -7,6 +7,7 @@
       <el-button type="primary" style="margin-left: 5px;"><i class="el-icon-search"></i> 搜索</el-button>
     </header>
 
+    <!-- 表格 -->
     <el-table :data="tableData" stripe>
       <el-table-column prop="name" label="名称"></el-table-column>
       <el-table-column prop="age" label="年龄"></el-table-column>
@@ -15,6 +16,7 @@
       <el-table-column prop="sex" label="性别"></el-table-column>
     </el-table>
 
+    <!-- 分页 -->
     <el-pagination
       style="margin-top: 20px;"
       background
@@ -31,12 +33,17 @@ export default {
   name: 'HomeView',
   data() {
     return {
-      tableData: [
-        {name: '王五', age: 20, address: '北京市', phone: '13583483454', sex: '男'},
-        {name: '王五', age: 20, address: '北京市', phone: '13583483454', sex: '男'},
-        {name: '王五', age: 20, address: '北京市', phone: '13583483454', sex: '男'},
-        {name: '王五', age: 20, address: '北京市', phone: '13583483454', sex: '男'},
-      ]
+      tableData: []
+    }
+  },
+  created() {
+    this.load();
+  },
+  methods: {
+    load() {
+      fetch('http://localhost:18103/user/list').then(res => res.json()).then(res => {
+        this.tableData = res;
+      });
     }
   }
 }
